@@ -1,0 +1,74 @@
+﻿body
+{
+    /* Remove any default margin imposed by the browser. */
+    margin: 0;
+    
+    background: #f7f7f7;
+    font-family: Arial, sans-serif;
+}
+
+input
+{
+    /* Override the default padding and add a border with rounded corners to
+       make input fields a little les boring. */
+    padding: 3px 5px;
+    border: 1px solid #aaaaaa;
+    border-radius: 5px;
+}
+
+#banner
+{
+    /* Use padding to give the banner some height.  A large left-padding value
+       is required so that the banner text doesn't overlap the background
+       image. */
+    padding: 19px 0px 19px 250px;
+
+    /* Add a background image to the banner and position it such that it is left
+       aligned, but with some padding so that it doesn't hug the side of the
+       screen. */
+    background: url("../img/logo.png") no-repeat 25px center #14283e;
+
+    /* The background is dark, so the text needs to be light. */
+    color: #ffffff;
+}
+
+#banner h1
+{
+    /* Remove any default margin imposed by the browser. */
+    margin: 0;
+
+    /* Override the default header size to make the banner text small and
+       upper case. */
+    font-size: 0.85em;
+    text-transform: uppercase;
+}
+
+#votingStation, #results
+{
+    /* Add appropriate margin and padding to separate sections as well as add
+       spacing inside. */
+    margin: 10px 15px;
+    padding: 10px 15px;
+
+    /* Add a background color, border with rounded corners as well as a box
+       shadow to make the sections stand out.*/
+    background-color: #eeeeee;
+    border: 1px solid #aaaaaa;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px #ccc;
+
+    /* Decrease the font size for the sections because it's probably too big. */
+    font-size: 0.9em;
+}
+
+#votingStation h1, #results h1
+{
+    /* Remove all browser-imposed margin and then apply a bottom margin to
+       separate the header from the next element in the section. */
+    margin: 0 0 5px 0;
+
+    color: #1064B4;
+
+    /* Override the default header font size because it's generally too big. */
+    font-size: 1.2em;
+}

@@ -3,15 +3,28 @@
     <head>
         <title>Live Voting App</title>
         <meta charset="utf-8" />
-        <script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script type="text/javascript" src="https://cdn.goinstant.net/v1/platform.min.js"></script>
+        <meta name="viewport" content="width=device-width, user-scalable=false;" />
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/goinstant.platform.min.js"></script>
         <script type="text/javascript" src="js/liveVoting.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/liveVoting.css" />
+        <link href="img/favicon.png" rel="icon">
     </head>
     <body>
-        <h1>Live Voting App</h1>
-        <form action="#">
-            <label for="entry">Voting Entry</label>
-            <input type="text" name="entry" id="sync" />
-        </form>
+        <section id="banner">
+            <h1>Live Voting App</h1>
+        </section>
+
+        <section id="votingStation">
+            <h1>Enter your own vote</h1>
+            <form action="#">
+                <label for="entry">Entry</label>
+                <input type="text" name="entry" id="sync" />
+            </form>
+        </section>
+
+        <section id="results">
+            <h1>Results</h1>
+        </section>
     </body>
 </html>

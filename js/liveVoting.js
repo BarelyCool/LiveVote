@@ -3,6 +3,8 @@ var goInstantUrl = "https://goinstant.net/BarelyCool/LiveVote";
 
 $(document).ready(function()
 {
+    console.log("Attempting to connect to the GoInstant server.");
+
     // Attempt to connect to the GoInstant server.
     goinstant.connect(goInstantUrl, function (err, platform, lobby)
     {
@@ -13,8 +15,11 @@ $(document).ready(function()
             // the connection the app cannot function, so alert the user by
             // displaying a message and disabling all the input fields on the
             // page.
+            console.log("Error connecting to GoInstant server: " + err);
             throw err;
         }
+
+        console.log("Successfully connected to the GoInstant server.");
 
         var entry = lobby.key("entry");
         var el = $("input[name='entry']");
