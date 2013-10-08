@@ -1,4 +1,4 @@
-﻿// Define the URL needed to connect to GoInstant.
+﻿// Define the URL required to connect to GoInstant.
 var goInstantUrl = "https://goinstant.net/BarelyCool/LiveVote";
 
 $(document).ready(function()
@@ -13,25 +13,12 @@ $(document).ready(function()
         {
             // Something went wrong connecting to the GoInstant server.  Without
             // the connection the app cannot function, so alert the user by
-            // displaying a message and disabling all the input fields on the
+            // displaying a message and disable all the input fields on the
             // page.
             console.log("Error connecting to GoInstant server: " + err);
             throw err;
         }
 
         console.log("Successfully connected to the GoInstant server.");
-
-        var entry = lobby.key("entry");
-        var el = $("input[name='entry']");
-
-        entry.on("set", function(value, context)
-        {
-            el.val(value);
-        });
-
-        el.on("keyup", function()
-        {
-            entry.set($(this).val());
-        });
     });
 });
