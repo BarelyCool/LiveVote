@@ -2,7 +2,7 @@
 {
     /* Remove any default margin imposed by the browser. */
     margin: 0;
-    
+
     background: #f7f7f7;
     font-family: Arial, sans-serif;
 }
@@ -43,7 +43,7 @@ input
     text-transform: uppercase;
 }
 
-#votingStation, #results
+#addEntry, #ballot
 {
     /* Add appropriate margin and padding to separate sections as well as add
        spacing inside. */
@@ -61,7 +61,7 @@ input
     font-size: 0.9em;
 }
 
-#votingStation h1, #results h1
+#addEntry h1, #ballot h1
 {
     /* Remove all browser-imposed margin and then apply a bottom margin to
        separate the header from the next element in the section. */
@@ -71,4 +71,10 @@ input
 
     /* Override the default header font size because it's generally too big. */
     font-size: 1.2em;
+}
+
+#addEntry p
+{
+    font-size: 0.9em;
+    font-style: italic;
 }
