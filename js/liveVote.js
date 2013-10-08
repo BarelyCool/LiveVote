@@ -19,7 +19,7 @@ $(document).ready(function()
             // action.
             handleError(
                 error,
-                "Unable to connect to GoInstant.  Application is disabled.");
+                "Failed to connect to GoInstant.  Application is disabled.");
         }
 
         // The connection with GoInstant was succesful, so now we can proceed
@@ -47,11 +47,19 @@ $(document).ready(function()
 
         // Create a listener that will be triggered when any user, local or
         // remote, performs any action on the ballot (such as add/remove entry).
-        var ballotListener = function(value, context)
+        var ballotListener = function(entries, context)
         {
-            console.log("Ballot listener invoked...");
+            // Determine if there are any ballot entries.
+            if (entries)
+            {
+                console.log("Ballot listener invoked with entries: " + entries);
 
-            // TODO Fill out the listener...
+                // For now set entries as the text of the ballot element.
+                //
+                // TODO Eventually do something more fancy here.
+                //
+                $("#ballot").text(entries);
+            }
         };
 
         // Set up a watch on the ballot key and supply a listener that will
@@ -66,7 +74,7 @@ $(document).ready(function()
                 // An error occurred setting up the ballot watch.  Without the
                 // watch the application is effectively useless, so log the
                 // error and disable the application.
-                handleError(error, "Unable to setup ballot watch.");
+                handleError(error, "Failed to setup ballot watch.");
             }
 
             console.log("Successfully setup ballot watch.");
@@ -86,9 +94,58 @@ $(document).ready(function()
  */
 function addEntry(entry, ballot)
 {
-    console.log("Attempting to add entry='" + entry + "' to ballot.");
+    console.log("Attempting to add entry '" + entry + "' to ballot.");
 
-    // TODO Fill out the rest of this function...
+    // Get the value of the ballet key, which represents the entries of the
+    // ballot.
+    ballot.get(function(error, entries, context)
+    {
+        // Check if there was an error retrieving the ballot entries.
+        if (error)
+        {
+            // A error occurred getting the ballot entries.  Without the entries
+            // the application is effectively useless, so log the error and
+            // disable the application.
+            handleError(error, "Failed to get ballot entries.");
+        }
+
+        // Check if the entries value is null.  If so, it means that no entries
+        // have been added to the ballot yet.
+        if (entries)
+        {
+            console.log("Ballot already has entries; adding new entry to "
+                + "existing array.");
+
+            // The ballot already has entries so add the new entry to the
+            // collection.
+            entries.push(entry);
+        }
+        else
+        {
+            console.log("Ballot does not have any entries; creating new array "
+                + "of entries.");
+
+            // The ballot does not have any entries, so create a new array and
+            // add the new entry.
+            entries = [entry];
+        }
+
+        // Set the updated array of entries within the ballot.
+        ballot.set(entries, function(error)
+        {
+            // Check if there was an error setting the entries within the
+            // ballot.
+            if (error)
+            {
+                // There was an error setting the entries within the ballot.
+                // Without the ability to save entries the application cannot
+                // function, so log the error and disable the application.
+                handleError(error, "Failed to set entries within the ballot.");
+            }
+
+            console.log("Successfully added entry '" + entry + "' to ballot.");
+        });
+    });
 }
 
 /**
@@ -97,18 +154,18 @@ function addEntry(entry, ballot)
  * All input fields on the page will be disabled since the application can't
  * function with errors.
  *
- * @param err
+ * @param error
  *          The application error that was encountered.  Can't be undefined.
- * @param desc
+ * @param description
  *          A user-friendly description of the error that was encountered.  This
  *          description will be logged to the console for debugging purposes and
  *          will also be displayed to the user.  Can't be an empty string.
  */
-function handleError(err, desc)
+function handleError(error, description)
 {
     // Log the user-friendly description of the error to the console for
     // debugging purposes.
-    console.log(desc);
+    console.log(description);
 
     // Disable the application by disabling all of the input fields on the page.
     // This will prevent the user from doing anything.
@@ -118,10 +175,10 @@ function handleError(err, desc)
     // disabled.
     //
     // TODO An alert is okay for now, but since they're generally annoying it
-    // would be nice to present this message a different way.
+    // would be nice to display this message a different way.
     //
-    alert(desc);
+    alert(description);
 
     // For good measure throw the error.
-    throw err;
+    throw error;
 }
