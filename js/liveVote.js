@@ -54,11 +54,15 @@ $(document).ready(function()
             {
                 console.log("Ballot listener invoked with entries: " + entries);
 
-                // For now set entries as the text of the ballot element.
-                //
-                // TODO Eventually do something more fancy here.
-                //
-                $("#ballot").text(entries);
+                // Clear the existing entries from the ballot.
+                $("#entries").empty();
+
+                // Now loop through each entry and add it as an item to the
+                // entries list.
+                $.each(entries, function(index, entry)
+                {
+                    $("#entries").append("<li>" + entry + "</li>");
+                });
             }
         };
 
