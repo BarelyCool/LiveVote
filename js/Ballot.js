@@ -148,8 +148,13 @@ function Ballot(renderer)
         // both by the local user and remote users.
         function removeEntryListener(entry)
         {
-            // Remove the entry from the local data member.
-            //self.entries.push(entry);
+            // Check if the supplied entry is undefined.  If so, it means that
+            // all entries have been removed through the removeAllEntries()
+            // function.  Clear the local entry array.
+            if (!entry)
+            {
+                self.entries = [];
+            }
 
             // The entries have been updated, so invoke the renderer function in
             // order to render the ballot on the page.
@@ -225,5 +230,28 @@ Ballot.prototype.removeEntry = function(entryId)
 
         console.log("Successfully removed entry with id '" + entryId + "' from "
             + "the ballot.");
+    });
+};
+
+/**
+ * Removes all entries from the ballot.
+ */
+Ballot.prototype.removeAll = function()
+{
+    console.log("Attempting to remove all entries from the ballot.");
+
+    this.ballot.remove(function(error)
+    {
+        // Determine if there was an error removing all entries from the ballot.
+        if (error)
+        {
+            // There was an error removing all entries from the ballot.  This is
+            // not the end of the world so log, propagate the error and carry
+            // on.
+            console.log("Failed to remove all entries from the ballot.");
+            throw error;
+        }
+
+        console.log("Succesfully removed all entries from the ballot.");
     });
 };

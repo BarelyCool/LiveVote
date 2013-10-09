@@ -28,6 +28,13 @@ $(document).ready(function()
         // the browser doesn't reload the page.
         event.preventDefault();
     });
+
+    // Setup a click handler for the "remove all entries" element that will
+    // invoke a function to remove all entries from the ballot.
+    $("#removeAllEntries").click(function()
+    {
+        ballot.removeAll();
+    });
 });
 
 /**
@@ -39,13 +46,13 @@ $(document).ready(function()
  */
 function ballotRenderer(ballot)
 {
+    // Clear the existing entries from the ballot.
+    $("#entries").empty();
+
     // Determine if there are any ballot entries.
     if (ballot.entries)
     {
         console.log("Ballot renderer invoked with entries: " + ballot.entries);
-
-        // Clear the existing entries from the ballot.
-        $("#entries").empty();
 
         // Now loop through each entry and add it as an item to the entries
         // list.
