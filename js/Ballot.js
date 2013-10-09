@@ -1,7 +1,7 @@
 /**
- * A ballot contains 0 or many Entry objects that form the heart of the live
- * voting system.  Users can add new entries to the ballot, place an unlimited
- * amount of votes and also remove entries from the ballot.
+ * A ballot contains 0 or many BallotEntry objects that form the heart of the
+ * live voting system.  Users can add new entries to the ballot, place an
+ * unlimited amount of votes and also remove entries from the ballot.
  *
  * Once instantiated the ballot will load all existing entries from the
  * GoInstant system.  Only one instance should exist per page.
@@ -70,11 +70,11 @@ function Ballot()
                     var id = identifiers[i];
                     var name = entries[id];
                     
-                    // Create a new Entry object using the id and name values.
-                    // Prefix the entry id with "/ballot" so that it holds the
-                    // fully qualified id.  Add the entry to the local array of
-                    // entries specific to the ballot class.
-                    self.entries.push(new Entry("/ballot/" + id, name));
+                    // Create a new BallotEntry object using the id and name
+                    // values.  Prefix the entry id with "/ballot" so that it
+                    // holds the fully qualified id.  Add the entry to the local
+                    // array of entries specific to the ballot class.
+                    self.entries.push(new BallotEntry("/ballot/" + id, name));
                 }
 
                 console.log("Successfully loaded ballot entries: "
@@ -97,7 +97,7 @@ function Ballot()
         function addEntryListener(name, context)
         {
             // Add the entry to the local data member.
-            self.entries.push(new Entry(context.addedKey, name));
+            self.entries.push(new BallotEntry(context.addedKey, name));
 
             // The entries have been updated, so re-render them on the page.
             render(self.entries);

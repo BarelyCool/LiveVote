@@ -10,7 +10,7 @@
  * @param votes
  *          The number of votes this entry has received.  Can't be undefined.
  */
-function Entry(id, name, votes)
+function BallotEntry(id, name, votes)
 {
     // Initialize the id, name and vote data members.
     this.id = id;
@@ -22,7 +22,7 @@ function Entry(id, name, votes)
  * Adds a vote for this entry.  There is no restriction on the number of votes
  * that can be made.
  */
-Entry.prototype.addVote = function()
+BallotEntry.prototype.addVote = function()
 {
     this.votes++;
 }
@@ -31,7 +31,7 @@ Entry.prototype.addVote = function()
  * Removes a vote from this entry.  Calling this function when the number of
  * votes is 0 will have no effect.
  */
-Entry.prototype.removeVote = function()
+BallotEntry.prototype.removeVote = function()
 {
     // Only remove a vote if the number of votes is more than 0.
     if (this.votes > 0)
@@ -43,7 +43,7 @@ Entry.prototype.removeVote = function()
 /**
  * @return A string representation of a ballot entry.
  */
-Entry.prototype.toString = function()
+BallotEntry.prototype.toString = function()
 {
-    return "Entry[id='" + this.id + "' name='" + this.name + "']";
+    return "BallotEntry[id='" + this.id + "' name='" + this.name + "']";
 }
