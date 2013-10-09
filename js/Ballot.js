@@ -90,13 +90,17 @@ function Ballot(renderer)
                 {
                     // Get the current entry id and name.
                     var id = identifiers[i];
-                    var name = entries[id];
+                    var entry = entries[id];
                     
-                    // Create a new BallotEntry object using the id and name
-                    // values.  Prefix the entry id with "/ballot" so that it
-                    // holds the fully qualified id.  Add the entry to the local
-                    // array of entries specific to the ballot class.
-                    self.entries.push(new BallotEntry(name, "/ballot/" + id));
+                    // Wrap the entry as a BallotEntry object and add it to the
+                    // local array of entries specific to the ballot class.
+                    // Prefix the entry id with "/ballot" so that it holds the
+                    // GoInstant fully qualified id.
+                    self.entries.push(
+                        new BallotEntry(
+                            entry.name,
+                            "/ballot/" + id,
+                            entry.votes));
                 }
 
                 // Now that all the enties have been loaded we can sort them.
@@ -119,10 +123,12 @@ function Ballot(renderer)
         
         // Define a function responsible for reacting to new entries being added
         // both by the local user and remote users.
-        function addEntryListener(name, context)
+        function addEntryListener(entry, context)
         {
-            // Add the entry to the local data member.
-            self.entries.push(new BallotEntry(name, context.addedKey));
+            // Wrap the entry as a BallotEntry object and add it to the local
+            // data member.  Use the context's "addedKey" property as the id for
+            // the ballot.
+            self.entries.push(new BallotEntry(entry.name, context.addedKey));
 
             // Since a new entry was added the array must be sorted again.
             sortEntries();
@@ -169,8 +175,14 @@ Ballot.prototype.addEntry = function(name)
 {
     console.log("Attempting to add entry '" + name + "' to ballot.");
 
+    // Create a new BallotEntry using the supplied name.  The entry id is not
+    // set here because we'll eventually use the id that GoInstant automatically
+    // generates when the entry is added to the ballot.  The number of votes
+    // for the entry will automatically be set to 0 in the constructor.
+    var entry = new BallotEntry(name);
+
     // Add the new entry to the ballot and listen for any errors.
-    this.ballot.add(name, function(error)
+    this.ballot.add(entry, function(error, context)
     {
         // Check if there was an error adding the entry to the ballot.
         if (error)
