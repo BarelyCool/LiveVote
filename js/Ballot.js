@@ -96,7 +96,7 @@ function Ballot(renderer)
                     // values.  Prefix the entry id with "/ballot" so that it
                     // holds the fully qualified id.  Add the entry to the local
                     // array of entries specific to the ballot class.
-                    self.entries.push(new BallotEntry("/ballot/" + id, name));
+                    self.entries.push(new BallotEntry(name, "/ballot/" + id));
                 }
 
                 // Now that all the enties have been loaded we can sort them.
@@ -122,7 +122,7 @@ function Ballot(renderer)
         function addEntryListener(name, context)
         {
             // Add the entry to the local data member.
-            self.entries.push(new BallotEntry(context.addedKey, name));
+            self.entries.push(new BallotEntry(name, context.addedKey));
 
             // Since a new entry was added the array must be sorted again.
             sortEntries();

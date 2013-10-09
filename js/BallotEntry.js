@@ -3,18 +3,19 @@
  * track of the number of votes it has received and also provides functions for
  * placing and retracting a vote.
  *
- * @param id
- *          Unique identifier for the entry.  Can't be undefined.
  * @param name
  *          The name of the entry.  Can't be undefined.
+ * @param id
+ *          Unique identifier for the entry.  Can be undefined.
  * @param votes
- *          The number of votes this entry has received.  Can't be undefined.
+ *          The number of votes this entry has received.  If undefined the
+ *          number of votes will default to 0.
  */
-function BallotEntry(id, name, votes)
+function BallotEntry(name, id, votes)
 {
-    // Initialize the id, name and vote data members.
-    this.id = id;
+    // Initialize the name, id and votes data members.
     this.name = name;
+    this.id = id;
     this.votes = votes;
 
     // If the number of votes is undefined then automatically set it to 0.
