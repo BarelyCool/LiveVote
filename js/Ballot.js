@@ -159,18 +159,18 @@ function Ballot(renderer)
 }
 
 /**
- * Adds the supplied entry value to the ballot.
+ * Adds a new entry, with the supplied name, to the ballot.
  *
- * @param entry
- *          The entry that will be added to the ballot.  If the entry is an
- *          empty string it will be ignored.
+ * @param name
+ *          The name of the entry that will be added to the ballot.  Can't be an
+ *          empty string.
  */
-Ballot.prototype.addEntry = function(entry)
+Ballot.prototype.addEntry = function(name)
 {
-    console.log("Attempting to add entry '" + entry + "' to ballot.");
+    console.log("Attempting to add entry '" + name + "' to ballot.");
 
     // Add the new entry to the ballot and listen for any errors.
-    this.ballot.add(entry, function(error)
+    this.ballot.add(name, function(error)
     {
         // Check if there was an error adding the entry to the ballot.
         if (error)
@@ -178,11 +178,11 @@ Ballot.prototype.addEntry = function(entry)
             // There was an error adding the entry to the ballot.  Without the
             // ability to add entries the application cannot function, so log
             // the error and disable the application.
-            handleError(error, "Failed to add entry '" + entry + "' to the "
+            handleError(error, "Failed to add entry '" + name + "' to the "
                 + "ballot.");
         }
 
-        console.log("Successfully added entry '" + entry + "' to ballot.");
+        console.log("Successfully added entry '" + name + "' to ballot.");
     });
 };
 
