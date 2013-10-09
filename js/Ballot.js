@@ -5,8 +5,13 @@
  *
  * Once instantiated the ballot will load all existing entries from the
  * GoInstant system.  Only one instance should exist per page.
+ *
+ * @param renderer
+ *          Function that will be executed in order to render the ballot.  The
+ *          function must take exactly one argument, which will be this Ballot
+ *          instance.  The function can't be undefined.
  */
-function Ballot()
+function Ballot(renderer)
 {
     // Define the URL required to connect to GoInstant.
     var goInstantUrl = "https://goinstant.net/BarelyCool/LiveVote";
@@ -80,9 +85,9 @@ function Ballot()
                 console.log("Successfully loaded ballot entries: "
                     + self.entries);
 
-                // The ballot entries were successfully loaded, so render the
-                // entries on the page.
-                render(self.entries);
+                // The ballot entries were successfully loaded, so invoke the
+                // renderer function in order to render the ballot on the page.
+                renderer(self);
             }
             else
             {
@@ -99,8 +104,9 @@ function Ballot()
             // Add the entry to the local data member.
             self.entries.push(new BallotEntry(context.addedKey, name));
 
-            // The entries have been updated, so re-render them on the page.
-            render(self.entries);
+            // The entries have been updated, so invoke the renderer function in
+            // order to render the ballot on the page.
+            renderer(self);
         }
 
         // Register the add entry listener.  This will fire any time anyone adds
@@ -116,8 +122,9 @@ function Ballot()
             // Remove the entry from the local data member.
             //self.entries.push(entry);
 
-            // The entries have been updated, so re-render them on the page.
-            render(self.entries);
+            // The entries have been updated, so invoke the renderer function in
+            // order to render the ballot on the page.
+            renderer(self);
         }
 
         // Register the remove entry listener.  This will fire any time anyone
@@ -184,33 +191,4 @@ Ballot.prototype.removeEntry = function(entryId)
         console.log("Successfully removed entry with id '" + entryId + "' from "
             + "the ballot.");
     });
-};
-
-/**
- * Renders the supplied ballot entries on the screen.
- *
- * @param entries
- *          The ballot entries to render on the screen or undefined if there are
- *          no entries to render.
- */
-function render(entries)
-{
-    // Determine if there are any ballot entries.
-    if (entries)
-    {
-        console.log("Ballot renderer invoked with entries: " + entries);
-
-        // Clear the existing entries from the ballot.
-        $("#entries").empty();
-
-        // Now loop through each entry and add it as an item to the entries
-        // list.
-        $.each(entries, function(index, entry)
-        {
-            $("#entries").append(
-                  "<li>"
-                +      entry.name
-                + "</li>");
-        });
-    }
 };

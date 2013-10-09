@@ -6,8 +6,9 @@ $(document).ready(function()
     console.log("Attempting to connect to the GoInstant server.");
 
     // Create an instance of the ballot.  This will load the ballot and its
-    // corresponding entries from the GoInstant server.
-    var ballot = new Ballot();
+    // corresponding entries from the GoInstant server.  Pass a function that
+    // will be used to render the ballot on the screen.
+    var ballot = new Ballot(ballotRenderer);
 
     // Set up a handler for when the entry form is submitting.  The handler
     // will invoke the addEntry() function within the Ballot object and supply
@@ -28,6 +29,35 @@ $(document).ready(function()
         event.preventDefault();
     });
 });
+
+/**
+ * Renders the supplied ballot on the screen.
+ *
+ * @param ballot
+ *          The ballot to render on the screen or undefined.  Can't be
+ *          undefined.
+ */
+function ballotRenderer(ballot)
+{
+    // Determine if there are any ballot entries.
+    if (ballot.entries)
+    {
+        console.log("Ballot renderer invoked with entries: " + ballot.entries);
+
+        // Clear the existing entries from the ballot.
+        $("#entries").empty();
+
+        // Now loop through each entry and add it as an item to the entries
+        // list.
+        $.each(ballot.entries, function(index, entry)
+        {
+            $("#entries").append(
+                  "<li>"
+                +      entry.name
+                + "</li>");
+        });
+    }
+};
 
 /**
  * Invoked when an error occurs initializing the application.  The error will be
