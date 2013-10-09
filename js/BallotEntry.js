@@ -16,6 +16,12 @@ function BallotEntry(id, name, votes)
     this.id = id;
     this.name = name;
     this.votes = votes;
+
+    // If the number of votes is undefined then automatically set it to 0.
+    if (!this.votes)
+    {
+        this.votes = 0;
+    }
 }
 
 /**
@@ -45,5 +51,6 @@ BallotEntry.prototype.removeVote = function()
  */
 BallotEntry.prototype.toString = function()
 {
-    return "BallotEntry[id='" + this.id + "' name='" + this.name + "']";
+    return "BallotEntry[id='" + this.id + "' name='" + this.name + "' votes="
+        + this.votes + "]";
 }

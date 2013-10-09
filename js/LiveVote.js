@@ -53,7 +53,7 @@ function ballotRenderer(ballot)
         {
             $("#entries").append(
                   "<li>"
-                +      entry.name
+                +      entry.name + " (" + entry.votes + ")"
                 + "</li>");
         });
     }
