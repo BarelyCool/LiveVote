@@ -10,15 +10,18 @@ $(document).ready(function()
     var ballot = new Ballot();
 
     // Set up a handler for when the entry form is submitting.  The handler
-    // will invoke the addEntry() function within the Ballot object as well as
-    // the entry value that was submitted by the user.
+    // will invoke the addEntry() function within the Ballot object and supply
+    // the entry name that was submitted by the user.
     $("#addEntry").submit(function(event)
     {
-        // Get the value of the entry that was submitted by the user.
-        var entry = $("#entry").val();
+        // Get the name of the entry that was submitted by the user.
+        var name = $("#name").val();
 
         // Add the entry to the ballot.
-        ballot.addEntry(entry);
+        ballot.addEntry(name);
+
+        // Clear the entry name value in the input field.
+        $("#name").val("");
 
         // Prevent the rest of the form submission from happening so that
         // the browser doesn't reload the page.
