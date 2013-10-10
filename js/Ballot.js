@@ -94,12 +94,10 @@ function Ballot(renderer)
                     
                     // Wrap the entry as a BallotEntry object and add it to the
                     // local array of entries specific to the ballot class.
-                    // Prefix the entry id with "/ballot" so that it holds the
-                    // GoInstant fully qualified id.
                     self.entries.push(
                         new BallotEntry(
                             entry.name,
-                            "/ballot/" + id,
+                            id,
                             entry.votes));
                 }
 
@@ -146,15 +144,10 @@ function Ballot(renderer)
 
         // Define a function responsible for reacting to entries being removed
         // both by the local user and remote users.
-        function removeEntryListener(entry)
+        function removeEntryListener()
         {
-            // Check if the supplied entry is undefined.  If so, it means that
-            // all entries have been removed through the removeAllEntries()
-            // function.  Clear the local entry array.
-            if (!entry)
-            {
-                self.entries = [];
-            }
+            // Clear the local entry array.
+            self.entries = [];
 
             // The entries have been updated, so invoke the renderer function in
             // order to render the ballot on the page.
@@ -204,19 +197,18 @@ Ballot.prototype.addEntry = function(name)
 };
 
 /**
- * Removes the entry with the supplied id from the ballot.
+ * Removes the entry from the ballot.
  *
- * @param entryId
- *          The id of the entry that will be removed from the ballot.  Can't be
- *          undefined.
+ * @param entry
+ *          The entry that will be removed from the ballot.  Can't be undefined.
  */
-Ballot.prototype.removeEntry = function(entryId)
+Ballot.prototype.removeEntry = function(entry)
 {
-    console.log("Attempting to remove entry with id '" + entryId + "' from the "
+    console.log("Attempting to remove entry '" + entry.id + "' from the "
         + "ballot.");
 
     // Removes the entry from the ballot and listen for any errors.
-    this.ballot.remove("/ballot/" + entryId, function(error)
+    this.ballot.remove(entry.id, function(error)
     {
         // Check if there was an error removing the entry from the ballot.
         if (error)
@@ -224,12 +216,12 @@ Ballot.prototype.removeEntry = function(entryId)
             // There was an error removing the entry from the ballot.  Without
             // the ability to remove entries the application cannot function, so
             // log the error and disable the application.
-            handleError(error, "Failed to remove entry with id '" + entryId
+            handleError(error, "Failed to remove entry '" + entry.name
                 + "' from the ballot.");
         }
 
-        console.log("Successfully removed entry with id '" + entryId + "' from "
-            + "the ballot.");
+        console.log("Successfully removed entry '" + entry.name + "' from the "
+            + "ballot.");
     });
 };
 
@@ -239,6 +231,9 @@ Ballot.prototype.removeEntry = function(entryId)
 Ballot.prototype.removeAll = function()
 {
     console.log("Attempting to remove all entries from the ballot.");
+
+    // Clear the local entry array.
+    this.entries = [];
 
     this.ballot.remove(function(error)
     {

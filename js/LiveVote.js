@@ -58,10 +58,28 @@ function ballotRenderer(ballot)
         // list.
         $.each(ballot.entries, function(index, entry)
         {
-            $("#entries").append(
-                  "<li>"
-                +      entry.name + " (" + entry.votes + ")"
-                + "</li>");
+            // Create a list item that will represent the ballot entry.
+            var listItem = $('<li></li>')
+                .html(entry.name + " (" + entry.votes + ")")
+                .appendTo("#entries");
+
+
+            // Create a link that allows the user to delete the entry.
+            var removeLink = $('<a href="#">Remove</a>')
+                //
+                // TODO Once the issues will removing items from a key are
+                // figured out the following line can be uncommented to add the
+                // capability of removing a single item from a key.
+                // 
+                // .appendTo(listItem)
+             ;
+
+            // Setup a click handler for remove link so that it invokes the
+            // proper function to remvoe the entry from the ballet.
+            removeLink.click(function()
+            {
+                ballot.removeEntry(entry);
+            });
         });
     }
 };
